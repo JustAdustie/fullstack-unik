@@ -1,0 +1,31 @@
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    padding: 2rem;
+    flex-direction: column;
+    text-align: center;
+}
+
+.main iframe{
+    display: block;
+}
+
+.bike {
+    margin-top: 3rem;
+}
+
+.phones, .mails{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.main a{
+    text-decoration: none;
+    color: rgb(117, 117, 117);
+}
+.main a:hover{
+    color: black;
+}
