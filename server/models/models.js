@@ -10,23 +10,45 @@ const User = sequelize.define('user', {
 
 const Basket = sequelize.define('basket' , {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    user_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
 const BasketItem = sequelize.define('basket_item' , {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    item_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    basket_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
 const Item = sequelize.define('item' , {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    img: {type: DataTypes.STRING, allowNull: false}
+    img: {type: DataTypes.STRING, allowNull: false},
+    type_id: {type: DataTypes.INTEGER, allowNull: false},
+    brand_id: {type: DataTypes.INTEGER, allowNull: false},
+    color_id: {type: DataTypes.INTEGER, allowNull: false}
 })
 
 const ItemInfo = sequelize.define('item_info', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     title: {type: DataTypes.STRING, allowNull: false},
     descrption: {type: DataTypes.STRING, allowNull: false},
+    item_id:{type: DataTypes.STRING, primaryKey: true, autoIncrement: true}
+})
+
+const Type = sequelize.define('type',{
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
+})
+
+const Brand = sequelize.define('brand',{
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
+})
+
+const Color = sequelize.define('color',{
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, unique: true, allowNull: false},
 })
 
 User.hasOne(Basket)
@@ -45,13 +67,28 @@ BasketItem.belongsTo(Item)
 Item.hasMany(ItemInfo)
 ItemInfo.belongsTo(Item)
 
+Item.hasOne(Brand)
+Brand.hasMany(Item)
+
+Item.hasOne(Type)
+Type.hasMany(Item)
+
+Item.hasOne(Color)
+Color.hasMany(Item)
+
+Type.hasMany(Brand)
+Brand.belongsToMany(Type)
+
+Brand.hasMany(Color)
+Color.belongsToMany(Brand)
+
 module.exports= {
     User, 
     Basket,
     BasketItem,
     Item,
-    ItemInfo
+    ItemInfo,
+    Type,
+    Brand,
+    Color
 }
-
-
-
